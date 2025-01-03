@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Streaming API Demo</title>
+    <style>
+        .progress-bar {
+            width: 300px;
+            height: 20px;
+            background-color: #f0f0f0;
+            margin: 10px 0;
+            position: relative;
+        }
+
+        .progress {
+            height: 100%;
+            background-color: #4CAF50;
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .chunk-log {
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px 0;
+            font-family: monospace;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Streaming API Demo</h1>
+
+    <div>
+        <h2>Bad Stream</h2>
+        <p>Downloads the entire file at once.</p>
+        <button onclick="startStream('/bad-stream', 'badStreamProgress', 'badStreamLog')">
+            Play from Bad Stream
+        </button>
+        <div class="progress-bar">
+            <div id="badStreamProgress" class="progress"></div>
+        </div>
+        <div id="badStreamLog" class="chunk-log"></div>
+        <audio id="badAudioPlayer" controls></audio>
+    </div>
+
+    <hr>
+
+    <div>
+        <h2>Good Stream</h2>
+        <p>Streams the audio in chunks.</p>
+        <button onclick="startStream('/good-stream', 'goodStreamProgress', 'goodStreamLog')">
+            Play from Good Stream
+        </button>
+        <div class="progress-bar">
+            <div id="goodStreamProgress" class="progress"></div>
+        </div>
+        <div id="goodStreamLog" class="chunk-log"></div>
+        <audio id="goodAudioPlayer" controls></audio>
+    </div>
+
+    <script>
+        async function startStream(endpoint, progressId, logId) {
+            const progressBar = document.getElementById(progressId);
+            const logElement = document.getElementById(logId);
+            const audioPlayer = document.getElementById(endpoint === '/bad-stream' ? 'badAudioPlayer' : 'goodAudioPlayer');
+
+            progressBar.style.width = '0%';
+            logElement.innerHTML = '';
+
+            try {
+                // First, get the file size
+                const response = await fetch(endpoint, { method: 'HEAD' });
+                const fileSize = response.headers.get('content-length');
+                let downloadedSize = 0;
+
+                // Create a new array to store chunks
+                const chunks = [];
+                const chunkSize = 1024 * 1024; // 1MB chunks
+
+                for (let start = 0; start < fileSize; start += chunkSize) {
+                    const end = Math.min(start + chunkSize - 1, fileSize - 1);
+
+                    const response = await fetch(endpoint, {
+                        headers: {
+                            Range: `bytes=${start}-${end}`
+                        }
+                    });
+
+                    const chunk = await response.blob();
+                    chunks.push(chunk);
+                    downloadedSize += chunk.size;
+
+                    // Update progress
+                    const progress = (downloadedSize / fileSize) * 100;
+                    progressBar.style.width = progress + '%';
+
+                    // Log chunk information
+                    logElement.innerHTML += `Received chunk: ${start}-${end} (${chunk.size} bytes)<br>`;
+                    logElement.scrollTop = logElement.scrollHeight;
+                }
+
+                // Combine all chunks and create URL
+                const blob = new Blob(chunks, { type: 'audio/mpeg' });
+                const url = URL.createObjectURL(blob);
+                audioPlayer.src = url;
+                audioPlayer.load();
+
+            } catch (error) {
+                console.error('Error:', error);
+                logElement.innerHTML += `Error: ${error.message}<br>`;
+            }
+        }
+    </script>
+</body>
+
+</html>
