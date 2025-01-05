@@ -50,22 +50,19 @@
 <body>
     <h1>Streaming Demo: Good vs Bad Practices</h1>
     <p id="description">
-        This demo compares two streaming approaches:
         <br><strong>Bad Practice:</strong> Sends the entire file at once, making it easy to download.
         <br><strong>Good Practice:</strong> Sends audio in chunks (HLS), improving security and bandwidth efficiency.
     </p>
 
-    <!-- Buttons -->
     <button id="badStreamBtn" class="bad-stream">Bad Practice: Entire File</button>
     <button id="goodStreamBtn" class="good-stream">Good Practice: Chunked Streaming</button>
 
-    <!-- Audio Player -->
     <audio id="audioPlayer" class="video-js vjs-default-skin" controls preload="auto" width="600"></audio>
 
-    <!-- Video.js Library -->
+    <!-- Video.js lib. -->
     <script src="https://vjs.zencdn.net/8.0.4/video.min.js"></script>
 
-    <!-- HLS.js Fallback for Browsers Without Native HLS Support -->
+    <!-- HLS.jsfor browsers without native HLS support -->
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
     <script>
@@ -73,7 +70,7 @@
         const goodStreamBtn = document.getElementById('goodStreamBtn');
         const badStreamBtn = document.getElementById('badStreamBtn');
 
-        // Bad Stream: Entire File at Once
+        //Bad stream
         badStreamBtn.addEventListener('click', () => {
             audioPlayer.src = '/bad-stream';
             audioPlayer.load();
@@ -81,11 +78,11 @@
             console.log('Bad Practice (Entire File) selected.');
         });
 
-        // Good Stream: HLS Chunked Streaming
+        //Good stream
         goodStreamBtn.addEventListener('click', () => {
             if (audioPlayer.canPlayType('application/vnd.apple.mpegurl')) {
                 // Native HLS support
-                audioPlayer.src = '/good-stream/hls/playlist.m3u8';
+                audioPlayer.src = '/good-stream/hls/playlist.m3u8'; //playlist.m3u8 is defualt name for playlist file
                 // or api call : 'http://localhost:3000/good-stream/hls/playlist.m3u8'
 
                 console.log('Native HLS support detected. Using native HLS.');
