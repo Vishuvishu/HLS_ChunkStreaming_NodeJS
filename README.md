@@ -6,7 +6,6 @@ This repository shows the difference between two streaming approaches: sending a
 Ofcourse based on your use case good and bad approch is different but when it comes to streaming good aproch would be streaming chunks.
 It is Node.js backend and a sample HTML frontend just to show both approaches.
 
----
 
 ## **Features**
 1. **Bad Streaming (Entire File)**:  
@@ -22,7 +21,7 @@ It is Node.js backend and a sample HTML frontend just to show both approaches.
 
 3. **Dynamic HLS File Generation:**
    Converts MP3 files into HLS format using FFmpeg.
----
+
 
 ## **Technologies and libraries Used**
 - **Node.js**: Backend server.
@@ -30,7 +29,7 @@ It is Node.js backend and a sample HTML frontend just to show both approaches.
 - **HTML & JavaScript**: Simple frontend for interacting with the backend.
 - **HLS.js**: JavaScript library for playing HLS content in browsers if not native HLS support.
 
----
+
 
 ## **Installation and Setup**
 
@@ -62,9 +61,6 @@ It is Node.js backend and a sample HTML frontend just to show both approaches.
    http://localhost:3000
    ```
 
----
-
-## **Usage**
 
 ### **Good Stream**
    - Open Network tab in inspect mode.
