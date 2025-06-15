@@ -1,5 +1,5 @@
 # **HLS_ChunkStreaming_NodeJS**
-   - [View my full blog on chunk streaming @ meadium](https://medium.com/@FingerPrintBlogs/dont-make-mistake-like-this-streaming-app-d14b246c79b2)
+   - [View my full blog on chunk streaming @ medium](https://medium.com/@FingerPrintBlogs/dont-make-mistake-like-this-streaming-app-d14b246c79b2)
 
 ## **HLS Chunk Streaming Example**
 
