@@ -1,4 +1,5 @@
 # **HLS_ChunkStreaming_NodeJS**
+   - [View my full blog on chunk streaming @ meadium](https://medium.com/@FingerPrintBlogs/dont-make-mistake-like-this-streaming-app-d14b246c79b2)
 
 ## **HLS Chunk Streaming Example**
 
@@ -76,9 +77,3 @@ It is Node.js backend and a sample HTML frontend just to show both approaches.
 - `/`: Serves the HTML frontend.
 - `/bad-stream`: Streams the entire MP3 file as a single download.
 - `/good-stream/hls/:file`: Streams HLS chunks or the master playlist.
-
-
-## **References**
-
-- Related Blog:
-   - [Don't Make This Common Streaming App Mistake](https://medium.com/@FingerPrintBlogs/dont-make-mistake-like-this-streaming-app-d14b246c79b2)
